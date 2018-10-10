@@ -7,10 +7,10 @@ public class decisionTree {
 		Info = new dataSet(file);
 	}
 	
-	public void listDataPoints(dataSet data) {
-		String[] titles = data.getTitles();
+	public void listDataPoints() {
+		String[] titles = Info.getTitles();
 		
-		for(int i = 0; i < data.getRows(); i++) {
+		for(int i = 0; i < Info.getRows(); i++) {
 			System.out.println(titles[i]);
 		}
 		System.out.println();
