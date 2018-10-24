@@ -18,8 +18,8 @@ public class dataForm {
 		data.add(row);
 	}
 	
-	public String[] getLine(int line) {
-		return data.get(line);
+	public String[] getRow(int row) {
+		return data.get(row);
 	}
 	
 	public int getSize() {

@@ -23,9 +23,21 @@ public class decisionTree {
 	}
 	
 	public void buildDecisionTree() {
+		ID3Tree algorithm = new ID3Tree(Info.getTrainingData(), Info.getTitles(), .8, 80);
+		algorithm.trainTree();
+		root = algorithm.getTree();
 	}
 	
 	public void createTrainingData(double testPercent) {
 		Info.splitData(testPercent);
+	}
+
+	public void testTree(dataForm testData){
+		int right;
+		int wrong;
+		
+		for(int i = 0; i < testData.getSize(); i++){
+			String[] row =  testData.getRow(i);
+		}
 	}
 }

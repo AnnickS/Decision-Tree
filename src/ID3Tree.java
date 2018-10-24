@@ -75,7 +75,7 @@ public class ID3Tree {
 	}
 	
 	private String findBest(dataForm examples, boolean[] traversed) {
-		double[] gain = new double[titles.length];
+		double[] gain = new double[titles.length-1];
 		String attribute;
 		for(int i = 0; i < gain.length; i++) {
 			if(traversed[i]) {
