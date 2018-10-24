@@ -1,23 +1,28 @@
 import java.io.File;
 
 public class decisionTree {
-	dataSet Info;
+	Node root;
+	dataManipulator Info;
 	
 	public decisionTree(File file) {
-		Info = new dataSet(file);
+		Info = new dataManipulator(file);
+		Info.modifyDataAge();
+		Info.modifyDataMonth();
+		//Voids column 'amount'
+		Info.voidColumn(4);
+		//Amount: 250 - 18424
 	}
 	
-	public void listDataPoints() {
+	public void listAttributeTitles() {
 		String[] titles = Info.getTitles();
 		
-		for(int i = 0; i < Info.getRows(); i++) {
+		for(int i = 0; i < titles.length; i++) {
 			System.out.println(titles[i]);
 		}
 		System.out.println();
 	}
 	
 	public void buildDecisionTree() {
-		
 	}
 	
 	public void createTrainingData(double testPercent) {

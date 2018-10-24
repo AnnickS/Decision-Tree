@@ -6,7 +6,7 @@ public class treeBuilder {
 	public static void main(String[] args) {
 		loanTree = new decisionTree(new File("data/credit.csv"));
 		loanTree.createTrainingData(.1);
-		loanTree.listDataPoints();
+		loanTree.listAttributeTitles();
 	}
 
 }
