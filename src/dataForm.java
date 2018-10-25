@@ -6,14 +6,12 @@ import java.util.Map;
 //that can manipulate that data and get statistic from it.
 public class dataForm {
 	private List<String[]> data = new ArrayList<String[]>();
-	private String[] titles;
 	
 	public dataForm() {
 	}
 	
-	public dataForm(List<String[]> data, String[] titles) {
+	public dataForm(List<String[]> data) {
 		this.data = data;
-		this.titles = titles;
 	}
 	
 	public void add(String[] row) {
@@ -28,6 +26,8 @@ public class dataForm {
 		return data.size();
 	}
 	
+	//Calculates how many results are positive
+	//in this data set.
 	public int getPositive() {
 		int yes = 0;
 		if(!data.isEmpty()) {
@@ -39,16 +39,6 @@ public class dataForm {
 			}
 		}
 		return yes;
-	}
-	
-	public void voidColumn(int column) {
-		List<String[]> redundantData = new ArrayList<String[]>();
-		for(int i = 0; i< data.size(); i++) {
-			String[] row = data.get(i);
-			row[column] = "";
-			redundantData.add(row);
-		}
-		data = redundantData;
 	}
 	
 	public String[] getAttributesofColumn(int column) {

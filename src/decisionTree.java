@@ -9,19 +9,7 @@ public class decisionTree {
 		Info = new dataManipulator(file);
 		Info.modifyDataAge();
 		Info.modifyDataMonth();
-		//Voids column 'amount'
-		Info.voidColumn(4);
 		titles = Info.getTitles();
-		//Amount: 250 - 18424
-	}
-	
-	public void listAttributeTitles() {
-		String[] titles = Info.getTitles();
-		
-		for(int i = 0; i < titles.length; i++) {
-			System.out.println(titles[i]);
-		}
-		System.out.println();
 	}
 	
 	public void buildDecisionTree() {
@@ -34,7 +22,7 @@ public class decisionTree {
 		Info.splitData(testPercent);
 	}
 
-	public void testTree(){
+	public double testTree(){
 		dataForm testData = Info.getTestData();
 		int right = 0;
 		
@@ -47,7 +35,7 @@ public class decisionTree {
 		
 		double correctPer = right/(double)testData.getSize();
 		
-		System.out.println("Percentage Correct: " + correctPer);
+		return correctPer;
 	}
 	
 	private boolean getResult(Node att, String[] row) {

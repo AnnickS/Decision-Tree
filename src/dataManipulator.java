@@ -43,13 +43,13 @@ public class dataManipulator {
 	}
 	
 	public dataForm getTestData() {
-		dataForm test = new dataForm(testData, titles);
+		dataForm test = new dataForm(testData);
 		
 		return test;
 	}
 	
 	public dataForm getTrainingData() {
-		dataForm training = new dataForm(trainingData, titles);
+		dataForm training = new dataForm(trainingData);
 		
 		return training;
 	}
