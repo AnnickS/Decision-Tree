@@ -5,9 +5,10 @@ public class program {
 
 	public static void main(String[] args) {
 		loanTree = new decisionTree(new File("data/credit.csv"));
-		loanTree.createTrainingData(.9);
+		loanTree.createTestData(.1);
+		loanTree.buildDecisionTree();
 		loanTree.listAttributeTitles();
-		loanTree.createTrainingData();
+		loanTree.testTree();
 	}
 
 }

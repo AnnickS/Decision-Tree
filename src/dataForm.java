@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+//A class that holds data and performs functionalities
+//that can manipulate that data and get statistic from it.
 public class dataForm {
 	private List<String[]> data = new ArrayList<String[]>();
 	private String[] titles;
@@ -28,13 +30,14 @@ public class dataForm {
 	
 	public int getPositive() {
 		int yes = 0;
-		int column = data.get(0).length;
-		for(String[] i : data) {
-			if(i[column].equals("yes")) {
-				yes++;
+		if(!data.isEmpty()) {
+			int column = data.get(0).length-1;
+			for(String[] i : data) {
+				if(i[column].equals("yes")) {
+					yes++;
+				}
 			}
 		}
-		
 		return yes;
 	}
 	
@@ -55,10 +58,11 @@ public class dataForm {
 				att.add(a[column]);
 			}
 		}
-		
-		return (String[])att.toArray();
+
+		return att.toArray(new String[0]);
 	}
 	
+	//Gets the positive and negative counts of a column
 	public int[] getColumnAccuracy(int column) {
 		int positive = 0;
 		int negative = 0;
@@ -73,10 +77,11 @@ public class dataForm {
 		
 		int[] both = new int[2];
 		both[0] = positive;
-		both[0] = negative;
+		both[1] = negative;
 		return both;
 	}
 	
+	//Gets the positive and negative counts of an attribute in a column
 	public int[] getAttributeAccuracy(int column, String attribute) {
 		int positive = 0;
 		int negative = 0;

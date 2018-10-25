@@ -17,7 +17,8 @@ public class ID3Tree {
 	}
 	
 	public void trainTree() {
-		boolean[] traversed = new boolean[titles.length];
+		boolean[] traversed = new boolean[titles.length-1];
+		traversed[4] = true;
 		treeRoot = train(trainingData, traversed);
 	}
 	
@@ -35,7 +36,7 @@ public class ID3Tree {
 	
 	private Node train(dataForm examples, boolean[] traversed) {
 		Node root = new Node();
-		double percent = examples.getPositive()/examples.getSize();
+		double percent = (double)examples.getPositive()/(double)examples.getSize();
 		if(percent >= percentThreshold) {
 			root.attribute = "+";
 			return root;
@@ -47,6 +48,7 @@ public class ID3Tree {
 		for(boolean i : traversed) {
 			if(!i) {
 				allTraveled = false;
+				break;
 			}
 		}
 		if(allTraveled || (examples.getSize() <= amountThreshold)) {
@@ -61,15 +63,33 @@ public class ID3Tree {
 		}
 		
 		String targetAttribute = findBest(examples, traversed);
-		
+		root.attribute = targetAttribute;
 		int column = getColumn(targetAttribute);
 		traversed[column] = true;
 		String[] values = trainingData.getAttributesofColumn(column);
+		String[] exampAtt = examples.getAttributesofColumn(column);
+		boolean found = false;
 		for(String v : values) {
+			for(String s : exampAtt) {
+				if(s.equals(v)) {
+					found = true;
+					break;
+				}
+			}
 			Node child = new Node();
 			child.attribute = v;
-			train(trainingData.breakData(column, v), traversed);
-			root.children.put(v, train(trainingData.breakData(column, v), traversed));
+			if(found) {
+				dataForm ex = examples.breakData(column, v);
+				root.children.put(v, train(ex, traversed));
+			} else {
+				if(percent >= .5) {
+					root.attribute = "+";
+					return root;
+				}else {
+					root.attribute = "-";
+					return root;
+				}
+			}
 		}
 		return root;
 	}
@@ -101,10 +121,13 @@ public class ID3Tree {
 	private double calculateGain(dataForm examples, int index) {
 		double gain;
 		
-		gain = entropy(examples.getColumnAccuracy(index));
-		String[] attributes = examples.getAttributesofColumn(index);
+		int[] totalAcc=examples.getColumnAccuracy(index);
+		gain = entropy(totalAcc);
+		String[] attributes = trainingData.getAttributesofColumn(index);
 		for(String s: attributes) {
-			gain -= entropy(examples.getAttributeAccuracy(index, s));
+			int[]currentAcc=examples.getAttributeAccuracy(index, s);
+			double e=  (currentAcc[0]+currentAcc[1])/(double)(totalAcc[0]+totalAcc[1])*entropy(currentAcc);
+			gain -= e;
 		}
 		
 		return gain;
@@ -112,16 +135,13 @@ public class ID3Tree {
 	
 	private double entropy(int[] values) {
 		int total = values[0]+values[1];
-		double percentP = values[0]/total;
-		double percentN = values[1]/total;
-		int n = -1;
+		double percentP = (double)values[0]/(double)total;
+		double percentN = (double)values[1]/(double)total;
 		double e = 0.0;
-		for(int i = 0; i < values.length; i++) {
-			double pos = Math.log(percentP)/Math.log(2);
-			double neg = Math.log(percentN)/Math.log(2);
+		double pos = Math.log(percentP)/Math.log(2);
+		double neg = Math.log(percentN)/Math.log(2);
 			
-			e = (percentP)*pos*(n)-(percentN)*neg;
-		}
+		e = -(percentP)*pos-(percentN)*neg;
 		
 		return Double.isNaN(e) ? 0 : e;
 	}

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class dataManipulator {
@@ -115,7 +116,7 @@ public class dataManipulator {
 	}
 	
 	public void splitData(double testPercent) {
-		Collections.shuffle(dataValues);
+		Collections.shuffle(dataValues,new Random(20));
 		
 		int amount = (int)(dataValues.size()*testPercent);
 		FileWriter writer;
