@@ -63,7 +63,9 @@ public class decisionTree {
 			int column = getColumn(a);
 			String answer = row[column];
 			Node next = att.children.get(answer);
-			System.out.println("question: " + a + " result: " + answer);
+			if(next == null) {
+				return att.yes;
+			}
 			return getResult(next, row);
 		}
 	}

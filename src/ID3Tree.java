@@ -61,36 +61,26 @@ public class ID3Tree {
 				return root;
 			}
 		}
+		if(percent >= .5) {
+			root.yes = true;
+		} else {
+			root.yes = false;
+		}
 		
 		String targetAttribute = findBest(examples, traversed);
 		root.attribute = targetAttribute;
 		int column = getColumn(targetAttribute);
 		traversed[column] = true;
-		String[] values = trainingData.getAttributesofColumn(column);
-		String[] exampAtt = examples.getAttributesofColumn(column);
+		String[] values = examples.getAttributesofColumn(column);
 		boolean found = false;
+		
 		for(String v : values) {
-			for(String s : exampAtt) {
-				if(s.equals(v)) {
-					found = true;
-					break;
-				}
-			}
 			Node child = new Node();
 			child.attribute = v;
-			if(found) {
-				dataForm ex = examples.breakData(column, v);
-				root.children.put(v, train(ex, traversed));
-			} else {
-				if(percent >= .5) {
-					root.attribute = "+";
-					return root;
-				}else {
-					root.attribute = "-";
-					return root;
-				}
-			}
+			dataForm ex = examples.breakData(column, v);
+			root.children.put(v, train(ex, traversed));
 		}
+		
 		return root;
 	}
 	

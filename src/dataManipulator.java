@@ -116,7 +116,7 @@ public class dataManipulator {
 	}
 	
 	public void splitData(double testPercent) {
-		Collections.shuffle(dataValues,new Random(20));
+		Collections.shuffle(dataValues);
 		
 		int amount = (int)(dataValues.size()*testPercent);
 		FileWriter writer;
